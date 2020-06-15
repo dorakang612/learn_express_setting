@@ -11,6 +11,7 @@ import path from "path";
 import logger from "morgan";
 import cookieParser from "cookie-parser";
 import session from "express-session";
+import flash from "connect-flash";
 
 require("dotenv").config();
 
@@ -54,6 +55,9 @@ app.use(express.urlencoded({ extended: false }));
 // request의 쿠키를 해석해주는 미들웨어
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(sessionMiddleware);
+
+// flash 메세지 미들웨어. Session을 이용하기 때문에 항상 session 다음에 등록
+app.use(flash());
 
 // index 라우터
 app.use("/", indexRouter);
